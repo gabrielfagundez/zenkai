@@ -9,10 +9,6 @@
         .no-tickets
           = image_tag 'beer.png', width: '120px', height: '120px'
           Nice! You don't have any ticket to estimate.
-  .large-6.columns
-    .light.panel.radius
-      .progress-bar-div
-        = render partial: 'progress_bar'
 
 .row
   .large-12.columns
@@ -20,11 +16,6 @@
       = render 'list', dashboard: true
 
 .row
-  .large-12.columns
-    .light.panel.radius
-      = render 'current_sprint'
-
-.row
-  .large-6.large-offset-6.columns
+  .large-6.large-offset-3.columns
     .panel.radius
       = render 'small_form'
