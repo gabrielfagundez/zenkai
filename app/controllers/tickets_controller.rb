@@ -130,8 +130,8 @@ class TicketsController < ApplicationController
   end
 
   def dashboard
-    @tickets = current_user.tickets.pending
-    @current_tickets = current_user.tickets.for_sprint(Sprint.current!.id)
+    @tickets = Tickets.pending
+    @current_tickets = Ticket.for_sprint(Sprint.current!.id)
     @ticket = Ticket.new(sprint: Sprint.current!)
 
     @pending = Ticket.pending_estimate_for(current_user).sort { |a| a.estimated? ? 1 : -1 }
