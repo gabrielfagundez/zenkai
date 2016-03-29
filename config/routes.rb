@@ -4,6 +4,7 @@ Zenkai::Application.routes.draw do
   devise_for :users
   get 'api/pending_estimates', to: 'Api#pending_estimates'
   post 'api/tickets/create', to: 'Api#create_ticket'
+
   resources :tickets do
     collection do
       get :dashboard
@@ -13,6 +14,7 @@ Zenkai::Application.routes.draw do
       get :current
       get :report
     end
+
     member do
       put :estimate
       put :re_estimate
@@ -20,17 +22,15 @@ Zenkai::Application.routes.draw do
       post :ignore
     end
   end
+
   resources :projects
+
   resources :users do
     member do
       post :approve
     end
   end
+
   resources :user_ticket_estimates
-  resources :sprints do
-    collection do
-      get :report
-    end
-  end
-  resources :sprint_users, only: [:new, :create, :index, :destroy]
+
 end
