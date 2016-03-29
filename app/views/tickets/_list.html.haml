@@ -12,9 +12,10 @@
       Project
     %th.name-row
       Name
+    %th.control-row
+
     %th.points-row
       Points
-    %th.control-row
 
   - @tickets.each do |ticket|
     %tr
@@ -24,13 +25,14 @@
 
       %td= ticket_link_or_name(ticket)
 
-      - if dashboard
-        %td{class: ticket_class(ticket), data: {path: estimates_ticket_path(ticket)}}= ticket.points || content_tag(:span, 'pending', title: estimated_by(ticket))
-      - else
-        %td.points{class: ticket_class(ticket), data: {path: estimates_ticket_path(ticket)}}= best_in_place ticket, :points, type: :input, nil: 'input points'
       %td
         - if dashboard
           = link_to content_tag(:i, "", class: "icon-ticket restimate") + ' Re-estimate', re_estimate_ticket_path(ticket), remote: true, method: :put, class: 'btn btn-primary btn-xs re-estimate'
         = link_to content_tag(:i, "", class: "icon-edit") + ' Edit', edit_ticket_path(ticket), class: 'btn btn-info btn-xs'
         - unless dashboard
           = link_to content_tag(:i, "", class: "icon-remove") + ' Destroy', ticket_path(ticket, params), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn destroy btn-danger btn-xs'
+
+      - if dashboard
+        %td{class: ticket_class(ticket), data: {path: estimates_ticket_path(ticket)}}= ticket.points || content_tag(:span, 'pending', title: estimated_by(ticket))
+      - else
+        %td.points{class: ticket_class(ticket), data: {path: estimates_ticket_path(ticket)}}= best_in_place ticket, :points, type: :input, nil: 'input points'
