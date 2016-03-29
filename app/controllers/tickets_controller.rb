@@ -130,7 +130,7 @@ class TicketsController < ApplicationController
   end
 
   def dashboard
-    @tickets = Tickets.pending
+    @tickets = Ticket.pending
     @current_tickets = Ticket.for_sprint(Sprint.current!.id)
     @ticket = Ticket.new(sprint: Sprint.current!)
 
