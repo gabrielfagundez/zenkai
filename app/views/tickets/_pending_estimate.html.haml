@@ -11,6 +11,8 @@
         Project
       %th.name-row
         Name
+      %th.description-row
+        Description
       %th.points-row
         Points
       %th
@@ -22,6 +24,8 @@
           = ticket.project_name
         %td.name-pending-row
           = ticket_link_or_name(ticket)
+        %th.description-row
+          = ticket.description
         %td.points-pending-row
           = best_in_place ticket, :points, { :display_with => lambda { |v| nil }, type: :input, nil => 'Not Estimated', path: estimate_ticket_path(ticket) }
         %td.ignore
