@@ -1,5 +1,5 @@
 class Ticket < ActiveRecord::Base
-  VALID_ESTIMATES = [1,2,3,5,8]
+  VALID_ESTIMATES = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8]
   belongs_to :project
   belongs_to :user
   belongs_to :sprint
@@ -82,20 +82,14 @@ class Ticket < ActiveRecord::Base
     if user_ticket_estimates.count >= project.min_estimates.to_i
       estimates = user_ticket_estimates.collect(&:points).compact
       avg = estimates.compact.sum / estimates.size.to_f
-      if avg <= VALID_ESTIMATES[0]
-        self.points = VALID_ESTIMATES[0]
-      elsif avg >= VALID_ESTIMATES.last
-        self.points = VALID_ESTIMATES.last
-      else
-        VALID_ESTIMATES.each_with_index do |estimate, i|
-          if avg >= estimate && avg <= VALID_ESTIMATES[i+1]
-            if avg >= estimate + (VALID_ESTIMATES[i+1] - estimate)/2
-              self.points = VALID_ESTIMATES[i+1]
-            else
-              self.points = estimate
-            end
-            break
+      VALID_ESTIMATES.each_with_index do |estimate, i|
+        if avg >= estimate && avg <= VALID_ESTIMATES[i + 1]
+          if avg >= estimate + (VALID_ESTIMATES[i + 1] - estimate) / 2
+            self.points = VALID_ESTIMATES[i + 1]
+          else
+            self.points = estimate
           end
+          break
         end
       end
     else
